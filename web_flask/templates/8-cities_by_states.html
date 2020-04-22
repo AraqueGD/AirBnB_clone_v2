@@ -10,7 +10,7 @@
       <li>
         {{ idx.id }}: <b>{{ idx.name }}</b>
         <ul>
-          {% for idx_city in cities %} {% if city.state_id == state.id %}
+          {% for idx_city in cities %} {% if idx_city.state_id == idx_city.id %}
           <li>{{ idx_city.id }}: <b>{{ idx_city.name }}</b></li>
           {% endfor %} {% endif %}
         </ul>
