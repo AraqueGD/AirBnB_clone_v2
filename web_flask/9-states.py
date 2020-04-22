@@ -25,7 +25,7 @@ def cities_by_states():
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id=""):
     states = storage.all(State).values()
-    states = sorted(states, key=lambda k: k.name)
+    state_sort = sorted(states, key=lambda k: k.name)
     flag_state = None
     if (id is None):
         states = None
@@ -34,10 +34,9 @@ def states_id(id=""):
             if (idx_states == id):
                 flag_state = idx_states
         cities = storage.all(City).values()
-        cities = sorted(list(cities), key=lambda k: k.name)
-        return render_template('9-states.html', states=states,
-                               cities=cities, flag_state=flag_state)
-
+        cities_sort = sorted(list(cities), key=lambda k: k.name)
+        return render_template('9-states.html', states=state_sort,
+                               cities=cities_sort, flag_state=flag_state)
 
 
 if __name__ == "__main__":
