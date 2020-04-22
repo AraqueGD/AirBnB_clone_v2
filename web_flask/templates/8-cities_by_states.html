@@ -6,11 +6,12 @@
   <body>
     <h1>States</h1>
     <ul>
-      {% for idx in states %}
+      {% for idx_state in states %}
       <li>
-        {{ idx.id }}: <b>{{ idx.name }}</b>
+        {{ idx_state.id }}: <b>{{ idx_state.name }}</b>
         <ul>
-          {% for idx_city in cities %} {% if idx_city.state_id == idx_city.id %}
+          {% for idx_city in cities %} {% if idx_city.state_id == idx_state.id
+          %}
           <li>{{ idx_city.id }}: <b>{{ idx_city.name }}</b></li>
           {% endfor %} {% endif %}
         </ul>
