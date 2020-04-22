@@ -22,8 +22,9 @@ def cities_by_states():
                            cities=sort_cities)
 
 
+@app.route('/states')
 @app.route('/states/<id>', strict_slashes=False)
-def states_id(id=""):
+def states_id(id=None):
     states = storage.all(State).values()
     state_sort = sorted(states, key=lambda k: k.name)
     flag_state = None
