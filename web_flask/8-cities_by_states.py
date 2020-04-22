@@ -11,6 +11,7 @@ app = Flask(__name__)
 def teardown_appcontext(error):
     storage.close()
 
+
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     states = storage.all(State).values()
