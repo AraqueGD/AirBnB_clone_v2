@@ -11,19 +11,14 @@ app = Flask(__name__)
 def teardown_appcontext(error):
     storage.close()
 
-
-@app.route('/states_list', strict_slashes=False)
-def states_list():
-    states = storage.all(State).values()
-    states = sorted(states, key=lambda k: k.name)
-    return (render_template('7-states_list.html', states=states))
-
-
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
+    states = storage.all(State).values()
+    sort_states = sorted(list(states), key=lambda k: k.name)
     cities = storage.all(City).values()
-    cities = sorted(cities, key=lambda k: k.name)
-    return (render_template('8-cities_by_states.html', cities=cities))
+    sort_cities = sorted(list(cities), key=lambda k: k.name)
+    return render_template('8-cities_by_states.html', states=sort_states,
+                           cities=sort_cities)
 
 
 if __name__ == "__main__":
