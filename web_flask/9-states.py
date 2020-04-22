@@ -12,9 +12,9 @@ def teardown_appcontext(error):
     storage.close()
 
 
-@app.route('/states')
+@app.route('/states', defaults={'id': None})
 @app.route('/states/<id>', strict_slashes=False)
-def states_id(id=None):
+def index(id):
     states = storage.all(State).values()
     filter_state = None
     sort_states = sorted(list(states), key=lambda k: k.name)
