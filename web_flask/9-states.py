@@ -26,18 +26,18 @@ def cities_by_states():
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id=None):
     states = storage.all(State).values()
-    state_sort = sorted(states, key=lambda k: k.name)
-    flag_state = None
-    if (id is None):
-        states = None
+    filter_state = None
+    sort_states = sorted(list(states), key=lambda k: k.name)
+    if id is None:
+        sort_cities = None
     else:
-        for idx_states in states:
-            if (idx_states == id):
-                flag_state = idx_states
+        for state in sort_states:
+            if state.id == id:
+                filter_state = state
         cities = storage.all(City).values()
-        cities_sort = sorted(list(cities), key=lambda k: k.name)
-        return render_template('9-states.html', states=state_sort,
-                               cities=cities_sort, flag_state=flag_state)
+        sort_cities = sorted(list(cities), key=lambda k: k.name)
+    return render_template('9-states.html', states=sort_states,
+                           cities=sort_cities, filter_state=filter_state)
 
 
 if __name__ == "__main__":
