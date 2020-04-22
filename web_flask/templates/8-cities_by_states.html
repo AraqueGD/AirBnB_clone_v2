@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>HBNB</title>
+    <TITTLE>HBNB</TITTLE>
   </head>
   <body>
     <h1>States</h1>
     <ul>
-      {% for idx in states %}
+      {% for state in states %}
       <li>
-        {{ idx.id }}: <b>{{ idx.name }}</b>
+        {{ state.id }}: <b>{{ state.name }}</b>
         <ul>
-          {% for idx_city in cities %} {% if city.state_id == state.id %}
-          <li>{{ city.id }}: <b>{{ city.name }}</b></li>
-          {% endfor %} {% endif %}
+          {% for city in cities %} {% if city.state_id == state.id %}
+          <li>{{ city.id }}: <b>{{city.name}}</b></li>
+          {% endif %} {% endfor %}
         </ul>
       </li>
       {% endfor %}
