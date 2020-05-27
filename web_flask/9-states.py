@@ -1,34 +1,48 @@
 #!/usr/bin/python3
+""" Starts a Flash Web Application """
 from models import storage
 from models.state import State
-from models.city import City
-from flask import Flask
-from flask import render_template
+from os import environ
+from flask import Flask, render_template
 app = Flask(__name__)
+# app.jinja_env.trim_blocks = True
+# app.jinja_env.lstrip_blocks = True
 
 
 @app.teardown_appcontext
-def teardown_appcontext(error):
+def close_db(error):
+    """ Remove the current SQLAlchemy Session """
     storage.close()
 
 
-@app.route('/states', defaults={'id': None})
+@app.route('/states', strict_slashes=False)
 @app.route('/states/<id>', strict_slashes=False)
-def index(id):
+def states_state(id=""):
+    """ displays a HTML page with a list of cities by states """
     states = storage.all(State).values()
-    filter_state = None
-    sort_states = sorted(list(states), key=lambda k: k.name)
-    if id is None:
-        sort_cities = None
-    else:
-        for state in sort_states:
-            if state.id == id:
-                filter_state = state
-        cities = storage.all(City).values()
-        sort_cities = sorted(list(cities), key=lambda k: k.name)
-    return render_template('9-states.html', states=sort_states,
-                           cities=sort_cities, filter_state=filter_state)
+    states = sorted(states, key=lambda k: k.name)
+    found = 0
+    state = ""
+    cities = []
+
+    for i in states:
+        if id == i.id:
+            state = i
+            found = 1
+            break
+    if found:
+        states = sorted(state.cities, key=lambda k: k.name)
+        state = state.name
+
+    if id and not found:
+        found = 2
+
+    return render_template('9-states.html',
+                           state=state,
+                           array=states,
+                           found=found)
 
 
 if __name__ == "__main__":
+    """ Main Function """
     app.run(host='0.0.0.0', port=5000)
